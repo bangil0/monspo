@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
          DB::table('users')->delete();
         //insert some dummy records
         DB::table('users')->insert(array(
-        array('nama'=>'Super Admin', 'password'=>bcrypt('super'),'nipbps'=>'520000000','nipbaru'=>'520000000','email'=>'admin@bpsntb.id','username'=>'admin','jabatan'=>'Kepala','satuankerja'=>'Admin BPSNTB','urlfoto'=>'','jk'=>'1','mitra'=>'1','aktif'=>'1','level'=>'9','isLokal'=>'1','created_at'=>NOW(),'updated_at'=>NOW()),
+        array('nama'=>'Super Admin', 'password'=>bcrypt('super'),'nipbps'=>'520000000','nipbaru'=>'520000000','email'=>'admin@bpsntb.id','username'=>'admin','jabatan'=>'Kepala','satuankerja'=>'Admin BPSNTB','kodebps'=>'5200','urlfoto'=>'https://via.placeholder.com/100x100','jk'=>'1','mitra'=>'1','aktif'=>'1','level'=>'9','isLokal'=>'1','created_at'=>NOW(),'updated_at'=>NOW()),
          ));
     }
 }
