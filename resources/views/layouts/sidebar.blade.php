@@ -23,7 +23,7 @@
         </li>
         
         <li class="nav-small-cap">--- MASTER</li>
-        <li> <a class="waves-effect waves-dark" href="#"><i class="ti-calendar"></i><span class="hide-menu">Users</span></a>
+        <li> <a class="waves-effect waves-dark" href="{{route('pegawai.list')}}"><i class="ti-calendar"></i><span class="hide-menu">Users</span></a>
         </li>
         
         <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Library</span></a>
