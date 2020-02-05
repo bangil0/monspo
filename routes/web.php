@@ -21,3 +21,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pegawai/provinsi/sync/{kodeprov}', 'PegawaiController@syncProvinsi')->name('pegprovinsi.sync');
 Route::get('/pegawai/kabkota/sync/{kodekabkota}', 'PegawaiController@syncKabkota')->name('pegkabkota.sync');
 Route::get('/pegawai/list','PegawaiController@index')->name('pegawai.list');
+
+
+//Route::get('logout', 'Auth\LoginController@logout');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');

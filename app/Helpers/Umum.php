@@ -9,6 +9,7 @@ class CommunityBPS
 	private $password; // password community
 	private $nip; // nip bps
 	private $isLogin = false;
+	public $errorLogin = true;
 	
 	// CONSTRUCTOR
 	function __construct($username, $password){
@@ -16,7 +17,6 @@ class CommunityBPS
 		$this->ch = curl_init();
 		$this->username = $username;
 		$this->password = $password;
-		
 		$this->login();
 	}
 	
@@ -251,9 +251,12 @@ class CommunityBPS
 			
 			$this->nip = $nip;
 			$this->ch = $ch;
+			$this->errorLogin = false;
 
-		}else{
-			throw new Exception("Plugin Community BPS stopped because The Credentials is wrong");
+		}
+		else{
+			//throw new Exception("Plugin Community BPS stopped because The Credentials is wrong");
+			$this->errorLogin = true;
 		}
 	}
 	
