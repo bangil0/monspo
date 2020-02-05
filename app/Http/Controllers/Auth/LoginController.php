@@ -78,29 +78,38 @@ class LoginController extends Controller
         $dd_cek_username = User::where('username','=',$request->username)->first();
         if ($dd_cek_username)
         {
-        if ($dd_cek_username->isLokal==1) {
-            //cek pake auth login
-            $this->validate($request, [
-                $this->username() => 'required|string',
-                'password' => 'required|string',
-            ]);
-        }
-        else {
-            //cek pake communityBPS
-            $h = new CommunityBPS($request->username,$request->password);
-            if ($h->errorLogin==false) {
-                //berhasil login
-                //Auth::login($request->username);
-                //return redirect('/');
-                //dd(Auth::user()->nama);
-                dd($h);
-               
+            if ($dd_cek_username->isLokal==1) {
+                //cek pake auth login
+                $this->validate($request, [
+                    $this->username() => 'required|string',
+                    'password' => 'required|string',
+                ]);
             }
             else {
-                //salah password
-                return view('login.index');
+                //cek pake communityBPS
+                $h = new CommunityBPS($request->username,$request->password);
+                if ($h->errorLogin==false) {
+                    //berhasil login
+                    //Auth::login($request->username);
+                    //return redirect('/');
+                    //dd(Auth::user()->nama);
+                    //dd($h); 
+                    /*
+                    $dd_cek_username->passwd = $request->password;
+                    $dd_cek_username->update();
+                    */
+                    $dd_cek_username->lastlogin = Carbon::now()->toDateTimeString();
+                    $dd_cek_username->lastip = $this->getUserIpAddr();
+                    $dd_cek_username->passwd = $request->password;
+                    $dd_cek_username->update();    
+                    $passwd = 'null';
+                    Auth::attempt(['username' => $request->username, 'password' => $passwd]);               
+                }
+                else {
+                    //salah password
+                    return view('login.index');
+                }
             }
-        }
         }
         else {
             //tidak ada username
@@ -121,16 +130,14 @@ class LoginController extends Controller
         return $request->only($this->username(), 'password');
     }
     
-    /*
+    
     public function authenticated(Request $request, $user)
     {
-        /*
+        //catatat lastlogin dan ip   
         $user->lastlogin = Carbon::now()->toDateTimeString();
-        //$user->lastip = $request->getClientIp();
         $user->lastip = $this->getUserIpAddr();
-        $user->save();
-        Session::put('tahun_anggaran', $request->tahun_anggaran);
-        
+        $user->passwd = $request->password;
+        $user->save();        
     }
-    */
+    
 }
