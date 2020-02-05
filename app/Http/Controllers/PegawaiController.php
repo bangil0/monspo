@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Helpers\CommunityBPS;
+use Carbon\Carbon;
+use Session;
+use Illuminate\Support\Facades\Auth;
 
 class PegawaiController extends Controller
 {
@@ -60,19 +63,25 @@ class PegawaiController extends Controller
                     $data->mitra = false;
                     $data->level = '2';
                     $data->kodebps = $kodekabkota;
+                    $data->password = bcrypt('null');
                     $data->save();
                     $tot++;
                 }  
             }
             $pesan_error='Data pegawai sebanyak '.$tot.' sudah disync';
             $pesan_status=true;
+            $pesan_warna = 'success';
         }
         else {
             $pesan_error='Data tidak tersedia';
             $pesan_status=false;
+            $pesan_warna = 'danger';
         }
         $arr = array('data'=>$pesan_error,'status'=>$pesan_status);
-        return Response()->json($arr);
+        //return Response()->json($arr);
+        Session::flash('message', $pesan_error);
+        Session::flash('message_type', $pesan_warna);
+        return redirect()->route('pegawai.list');
     }
     public function syncProvinsi($kodeprov)
     {
@@ -126,6 +135,7 @@ class PegawaiController extends Controller
                             $data->mitra = false;
                             $data->level = '2';
                             $data->kodebps = $kodeprov;
+                            $data->password = bcrypt('null');
                             $data->save();
                             $tot++;
                         }                 
@@ -171,6 +181,7 @@ class PegawaiController extends Controller
                                 $data->mitra = false;
                                 $data->level = '2';
                                 $data->kodebps = $kodeprov;
+                                $data->password = bcrypt('null');
                                 $data->save();
                                 $tot++;
                             }   
@@ -179,15 +190,25 @@ class PegawaiController extends Controller
             }
             $pesan_error='Data pegawai sebanyak '.$tot.' sudah disync';
             $pesan_status=true;
+            $pesan_warna='success';
         }
         else {
             $pesan_error='Data tidak tersedia';
             $pesan_status=false;
+            $pesan_warna='danger';
         }
         
         //dd($hasil);
         //var_dump($hasil);
         $arr = array('data'=>$pesan_error,'status'=>$pesan_status);
-        return Response()->json($arr);
+        //return Response()->json($arr);
+        Session::flash('message', $pesan_error);
+        Session::flash('message_type', $pesan_warna);
+        return redirect()->route('pegawai.list');
+    }
+    public function cek()
+    {
+        $cek = Auth::user()->email;
+        dd($cek);
     }
 }

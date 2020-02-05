@@ -36,4 +36,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    public function BPS(){
+        return $this->hasOne('App\KodeBPS','bps_kode', 'kodebps');
+    }
+    public function Level(){
+        return $this->hasOne('App\KodeLevel','level_id', 'level');
+    }
 }

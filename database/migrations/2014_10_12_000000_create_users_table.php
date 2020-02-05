@@ -30,6 +30,9 @@ class CreateUsersTable extends Migration
             $table->boolean('aktif')->default(1);
             $table->boolean('level')->default(1);
             $table->boolean('isLokal')->default(0);
+            $table->string('lastip',20)->nullable();
+            $table->dateTime('lastlogin')->nullable();
+            $table->string('passwd')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

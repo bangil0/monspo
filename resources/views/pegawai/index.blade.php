@@ -18,6 +18,13 @@
             </div>
         </div>
     </div>
+    <div class="row">
+    <div class="col-lg-12 col-sm-12">
+        @if (Session::has('message'))
+        <div class="alert alert-{{ Session::get('message_type') }}" id="waktu2" style="margin-top:10px;">{{ Session::get('message') }}</div>
+        @endif
+    </div>
+    </div>
     <!-- ============================================================== -->
     <!-- End Bread crumb and right sidebar toggle -->
     <!-- ============================================================== -->
@@ -28,14 +35,13 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table id="example" class="table table-bordered table-responsive table-striped">
+                    <table id="example" class="table table-bordered table-responsive table-hover table-striped" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                           <th>No</th>
                           <th>PIC</th>
                           <th>Nama</th>
                           <th>Username</th>
-                          <th>NIPBPS</th>
                           <th>NIP</th>
                           <th>JK</th>
                           <th>BPS</th>
@@ -52,11 +58,10 @@
                                     <tr>
                                         <td>{{$loop->iteration}}</td>
                                         <td>
-                                            <img class="img-circle" src="{{$item->urlfoto}}" alt="User profile picture" height="100px" width="100px">
+                                            <img class="img-circle" src="{{$item->urlfoto}}" alt="User profile picture" height="70px" width="70px">
                                         </td>
                                         <td>{{$item->nama}}</td>
                                         <td>{{$item->username}}</td>
-                                        <td>{{$item->nipbps}}</td>
                                         <td>{{$item->nipbaru}}</td>
                                         <td>
                                             @if ($item->jk == 1)
@@ -65,9 +70,9 @@
                                                 Perempuan
                                             @endif
                                         </td>
-                                        <td>{{$item->kodebps}}</td>
+                                        <td>{{$item->BPS->bps_nama}}</td>
                                         <td>{{$item->satuankerja}}</td>
-                                        <td>{{$item->level}}</td>
+                                        <td>{{$item->Level->level_nama}}</td>
                                         <td></td>
                                     </tr>
                                 @endforeach

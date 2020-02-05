@@ -10,18 +10,24 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
+Route::get('/', function () {
+    // Only authenticated users may enter...
+    return view('depan');
+})->middleware('auth');
+
+/*
 Route::get('/', function () {
     return view('depan');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
+*/
+Route::group(['middleware' => ['auth']], function () {
+//Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/pegawai/provinsi/sync/{kodeprov}', 'PegawaiController@syncProvinsi')->name('pegprovinsi.sync');
 Route::get('/pegawai/kabkota/sync/{kodekabkota}', 'PegawaiController@syncKabkota')->name('pegkabkota.sync');
 Route::get('/pegawai/list','PegawaiController@index')->name('pegawai.list');
-
-
+Route::get('/pegawai/cek','PegawaiController@cek')->name('pegawai.cek');
+});
 //Route::get('logout', 'Auth\LoginController@logout');
-Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout');
+Route::get('logout', '\App\Http\Controllers\Auth\LoginController@logout')->name('logout');
