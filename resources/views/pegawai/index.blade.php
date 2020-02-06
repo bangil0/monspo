@@ -35,7 +35,8 @@
         <div class="col-12">
             <div class="card">
                 <div class="card-body">
-                    <table id="example" class="table table-bordered table-responsive table-hover table-striped" cellspacing="0" width="100%">
+                    <div class="table-responsive">
+                    <table id="example" class="table table-bordered table-hover table-striped" cellspacing="0" width="100%">
                         <thead>
                         <tr>
                           <th>No</th>
@@ -80,6 +81,7 @@
                             @endif
                         </tbody>
                     </table>
+                    </div>
                 </div>
             </div>
         </div>
