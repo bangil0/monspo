@@ -1,5 +1,4 @@
 <script>
-    //data-id="{{$item->opd_id}}" data-kodebps="{{$item->opd_kodebps}}" data-nama="{{$item->opd_nama}}" data-alamat="{{$item->opd_alamat}}"
     $('#EditModal').on('show.bs.modal', function (event) {
     var button = $(event.relatedTarget) // Button that triggered the modal
     var opd_id = button.data('id') // Extract info from data-* attributes
