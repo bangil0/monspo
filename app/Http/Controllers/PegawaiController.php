@@ -19,7 +19,7 @@ class PegawaiController extends Controller
     }
     public function syncKabkota($kodekabkota)
     {
-        $h = new CommunityBPS('muslimin4','we9eat');
+        $h = new CommunityBPS(Auth::user()->username,Auth::user()->passwd);
         $hasil = $h->get_list_pegawai_kabkot($kodekabkota);
         $tot=0;
         //dd($hasil);
@@ -87,7 +87,7 @@ class PegawaiController extends Controller
     {
         //
         //dd($kodeprov);
-        $h = new CommunityBPS('muslimin4','we9eat');
+        $h = new CommunityBPS(Auth::user()->username,Auth::user()->passwd);
         $hasil = $h->get_list_pegawai_provinsi($kodeprov);
         $tot=0;
         //dd($hasil);
@@ -206,9 +206,31 @@ class PegawaiController extends Controller
         Session::flash('message_type', $pesan_warna);
         return redirect()->route('pegawai.list');
     }
-    public function cek()
+    public function PegApi($kodebps)
     {
-        $cek = Auth::user()->email;
-        dd($cek);
+        $count = User::where('kodebps','=',$kodebps)->where('aktif','=','1')->where('mitra','=','0')->count();
+        $arr = array('status'=>false,'peg_jumlah'=>0,'hasil'=>'Data tidak tersedia');
+        if ($count > 0) {
+            //data pegawainya ada
+            $data = User::where('kodebps','=',$kodebps)->where('aktif','=','1')->where('mitra','=','0')->get();
+            foreach ($data as $item) 
+            {
+                $hasil[] = array(
+                    'peg_id'=>$item->id,
+                    'peg_nama'=>$item->nama,
+                    'peg_nip'=>$item->nipbps,
+                    'peg_unitkerja'=>$item->satuankerja,
+                    'peg_jk'=>$item->jk,
+                    'peg_urlfoto'=>$item->urlfoto,
+                    'peg_level'=>$item->level
+                );
+            }
+            $arr = array(
+                'status'=>true,
+                'peg_jumlah'=>$count,
+                'hasil' => $hasil
+            );
+        }
+        return Response()->json($arr);
     }
 }

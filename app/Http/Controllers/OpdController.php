@@ -87,4 +87,29 @@ class OpdController extends Controller
         Session::flash('message_type', $warna_error);
         return redirect()->route('opd.list');
     }
+    public function OpdApi($kodebps)
+    {
+        $count = DaftarOpd::where('opd_kodebps','=',$kodebps)->where('opd_tim','=','0')->count();
+        $arr = array('status'=>false,'opd_jumlah'=>0,'hasil'=>'Data tidak tersedia');
+        if ($count > 0) {
+            //data pegawainya ada
+            $data = DaftarOpd::where('opd_kodebps','=',$kodebps)->where('opd_tim','=','0')->get();
+            foreach ($data as $item) 
+            {
+                $hasil[] = array(
+                    'opd_id'=>$item->opd_id,
+                    'opd_kodebps'=>$item->opd_kodebps,
+                    'opd_nama'=>$item->opd_nama,
+                    'opd_namabps'=>$item->KodeBPS->bps_nama,
+                    'opd_alamat'=>$item->opd_alamat          
+                );
+            }
+            $arr = array(
+                'status'=>true,
+                'opd_jumlah'=>$count,
+                'hasil' => $hasil
+            );
+        }
+        return Response()->json($arr);
+    }
 }
