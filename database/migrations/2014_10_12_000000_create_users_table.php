@@ -33,6 +33,7 @@ class CreateUsersTable extends Migration
             $table->string('lastip',20)->nullable();
             $table->dateTime('lastlogin')->nullable();
             $table->string('passwd')->nullable();
+            $table->string('nohp',25)->nullable();
             $table->rememberToken();
             $table->timestamps();
         });
